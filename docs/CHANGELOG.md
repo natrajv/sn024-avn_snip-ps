@@ -20,7 +20,9 @@
 - Test-Greeting.ps1
 *--References
 [01] Demo project of GreetingModule.psm1 by ChatGPT, https://chatgpt.com/s/t_68fdfba9c50881918c3ab0b16e4e3e9f, 26 Oct 2025.
-#*--v1.0.1w
-
-
+#*--v0.9.1-20251029_0712
+### Added
+- Demo Module "MyUtilityModule"
+- Demo for Powershell example code for module with public, private and helper functions
+- Ref. Link: [01] "Powershell example code for module with public, private and helper functions", Grok, https://grok.com/share/bGVnYWN5_0a7586a1-f1db-412f-838c-81244ca93678, 28 Oct 2025.
 ##=====##
