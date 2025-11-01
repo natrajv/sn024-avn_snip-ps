@@ -6,15 +6,6 @@
 .PARAMETER SnipDir
     The name of the directory to create and initialize the uv project in.
    #>
-param(
-    [string]$SnipDir
-)
-#*--Validate Param--*
-if ($PSBoundParameters.ContainsKey('SnipDir')) {
-	Write-Host "✅ Name was passed: $SnipDir" -ForegroundColor Green
-} else {
-	Write-Host "❌ Name was NOT passed" -ForegroundColor Red
-}
 
 #*--Set Config--*
 $script:SnipName = $null   # Argument for name of Snip
@@ -34,33 +25,33 @@ $script:OneDriveBaseDir = $env:OD_HOME
 #**==Functions==*
 function init_uv {
 	#--Remove directory if it exists
-	if (Test-Path -Path $SnipDir) {
-		Remove-Item -Path $SnipDir -Recurse -Force -Confirm
-		Write-Host "✅ Removed existing directory $snipDir" -ForegroundColor Red
+	if (Test-Path -Path $script:SnipName) {
+		Remove-Item -Path $script:SnipName -Recurse -Force -Confirm
+		Write-Host "✅ Removed existing directory $script:SnipName" -ForegroundColor Red
 	} else {
-		Write-Host "❌ Directory $SnipDir does not exist" -ForegroundColor Green
+		Write-Host "❌ Directory $script:SnipName does not exist" -ForegroundColor Green
 	}
 	#--Create directory
-	New-Item -Path $SnipDir -ItemType Directory
+	New-Item -Path $script:SnipName -ItemType Directory
 
 	#--Change to the new directory
-	Set-Location -Path $SnipDir
+	Set-Location -Path $script:SnipName
 	
 	#--Init uv project
 	uv init --app
-	Write-Host "✅ Initialized uv project in directory '$SnipDir'" -ForegroundColor Green
+	Write-Host "✅ Initialized uv project in directory '$script:SnipName'" -ForegroundColor Green
 }
 
 function init_support {
 	#--Init support directories, files
 	New-Item -ItemType Directory -Path rback # Rollback directory
 	New-Item -ItemType Directory -Path arch # Archive 
-	$tmp = $SnipDir + "-v1.0.0w-" + (Get-Date -Format "yyyyMMdd_HHmm")
+	$tmp = $script:SnipName + "-v1.0.0w-" + (Get-Date -Format "yyyyMMdd_HHmm")
 	New-Item -Path $tmp # Snip name with version flag file
 
 	#--List files in the directory
 	$files = Get-ChildItem
-	Write-Host "Files in directory '$SnipDir':" -ForegroundColor Green
+	Write-Host "Files in directory '$script:SnipName':" -ForegroundColor Green
 	$files | ForEach-Object { Write-Host $_.Name }
 	
 	#--Create Python-101 code file
@@ -84,9 +75,9 @@ function init_jupyter_kernel {
 	#--Setup Jupyter kernel
 	Write-Host "Setting up Jupyter kernel..." -ForegroundColor Blue
 	uv add ipykernel
-	Write-Host "✅ Added ipykernel to the uv project in directory '$SnipDir'" -ForegroundColor Green
-	uv run python -m ipykernel install --user --name $SnipDir --display-name $SnipDir # Register kernel
-	Write-Host "✅ Registered Jupyter kernel with name '$SnipDir'" -ForegroundColor Green
+	Write-Host "✅ Added ipykernel to the uv project in directory '$script:SnipName'" -ForegroundColor Green
+	uv run python -m ipykernel install --user --name $script:SnipName --display-name $script:SnipName # Register kernel
+	Write-Host "✅ Registered Jupyter kernel with name '$script:SnipName'" -ForegroundColor Green
 	jupyter kernelspec list
 }
 
@@ -94,7 +85,7 @@ function init_excel {
 	#--Setup OpenPyXL, Pandas, NumPy
 	Write-Host "Setting up OpenPyXL..." -ForegroundColor Blue
 	uv add openpyxl pandas numpy
-	Write-Host "✅ Added OpenPyXL, Pandas, NumPy to the uv project in directory $SnipDir" -ForegroundColor Green
+	Write-Host "✅ Added OpenPyXL, Pandas, NumPy to the uv project in directory $script:SnipName" -ForegroundColor Green
 	
 	#--Setup Excel Test DB
 	Write-Host "Setting up Excel Test DB..." -ForegroundColor Blue
@@ -103,7 +94,7 @@ function init_excel {
 	$FilePath = Join-Path -Path $OneDriveBaseDir -ChildPath (Join-Path -Path $FileBaseDir -ChildPath $ExcelDb)
 	New-Item -ItemType Directory -Name "db"
 	Copy-Item -Path $FilePath -Destination "db\jee-mains.xlsx" -Force
-	write-Host "✅ Copied Excel Test DB to '$SnipDir\db\jee-mains.xlsx'" -ForegroundColor Green
+	write-Host "✅ Copied Excel Test DB to '$script:SnipName\db\jee-mains.xlsx'" -ForegroundColor Green
 }
 
 function init_lib {
@@ -129,27 +120,26 @@ function init_git {
 	git branch
 	#--- 
 	git add . #Stage all files 
-	git commit -m "$SnipDir 1st commit" #Commit to local repo
+	git commit -m "$script:SnipName 1st commit" #Commit to local repo
 	git ls-files #View list of files 
-	Write-Host "Git repo $SnipDir updated" -ForegroundColor Green
+	Write-Host "Git repo $script:SnipName updated" -ForegroundColor Green
 }
 
 #**==Init MySnip==**
 function New-Snip {
-    param(
-        [string]$Name = "World"
-    )
-    return "Hello, $Name!"
 	param(
 		[string]$Name
 	)
 	#*--Validate Param--*
-	if ($PSBoundParameters.ContainsKey('SnipDir')) {
-		Write-Host "✅ Name was passed: $SnipDir" -ForegroundColor Green
+	if ($PSBoundParameters.ContainsKey('Name')) {
+		Write-Host "✅ Name was passed: $Name" -ForegroundColor Green
 	} else {
 		Write-Host "❌ Name was NOT passed" -ForegroundColor Red
 	}
-
+	
+	#*--Init
+	$script:SnipName = $Name
+	
 	#*--Init new snip
 	init_uv
 	init_support
@@ -160,7 +150,7 @@ function New-Snip {
 	init_git
 
 	#--Setup completed
-	Write-Host "✅ Setup completed in directory '$SnipDir'" -ForegroundColor Green
+	Write-Host "✅ Setup completed in directory '$script:SnipName'" -ForegroundColor Green
 
 }
 #**=====**
