@@ -3,19 +3,19 @@
     ModuleVersion = '1.0.0'
 
     # Script module (the .psm1 file)
-    RootModule = 'GreetingModule.psm1'
+    RootModule = 'AvnSnip.psm1'
 
     # Author/Description
     Author = 'Natarajan'
-    Description = 'A simple PowerShell greeting module example'
+    Description = 'Initialize New Snip for Python'
 
     # Functions to export (optional, can also be in Export-ModuleMember)
-    FunctionsToExport = @('Get-Greeting', 'Get-TimeGreeting')
+    FunctionsToExport = @('New-Snip')
 
     # No Cmdlets, Aliases exported
     CmdletsToExport = @()
     AliasesToExport = @()
 
     # Optional GUID (unique identifier)
-    GUID = 'b5b32a9e-0b9b-42c0-b5e5-f1b12e5b9ef1'
+    GUID = 'f3007b04-e5b6-4138-83fb-c9c8f979066b'
 }

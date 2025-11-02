@@ -39,6 +39,9 @@ PS> Test-NewSnip.ps1
 ```
 
 ## Version
+**v0.12.0-20251102_2114** <br/>
+- Renamed: AvnSnip module to AvnSnip1 (for preparing new AvnSnip replacement)
+---
 **v0.11.0-20251101_1601** <br/>
 - Added example module: HelloWorld _(v1.1.0-20251101_1334)_
 ---
