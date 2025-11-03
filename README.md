@@ -26,6 +26,11 @@ PS> .\AvnSnip\Test-NewSnip.ps1
 Result: Python snip project *xtest* created as *d:\temp\xtest*
 
 ## Version History
+**v1.1.0-20251103_0652**
+- Updated New-Snip: Added new parameter *-SnipType*
+- Options for SnipType parameter: *Python-1 | PowerShell-1*
+- Updated: *Test-AvnSnip.ps1*
+
 **v1.0.0-20251103_0522**
 - Version History of PowerShell script *init_mysnip.ps1* till v1.3.0 and snip project *SN024-AVN_SNIP-PS* till v0.12.0 are merged into *SN024-Avn_Snip-PS* module as v1.0.0
 - init_mysnip.ps1 moved from `"D:\Nats\08-repo\01-clouddrive\OneDrive\01-nats\03-sections\04-coding\03-sections\03-powershell\51-snippets\006-InitializeBaseDir-v1.0.0-20251102_1629.ps1"` to dedicated Snip project `"sn024-avn_snip-ps"`.

@@ -97,3 +97,42 @@ function _InitializeGit {
 	git ls-files #View list of files 
 	Write-Host "Git repo $SnipDir updated" -ForegroundColor Green
 }
+
+function _InitializeBaseDir {
+	# PowerShell Snip Base Directory Structure Initialization
+	# Define array for list of directories and files to create
+	$items = @(
+		"$SnipDir\",
+		"$SnipDir\Public\",
+		"$SnipDir\Private\",
+		"$SnipDir\$SnipDir.psd1",
+		"$SnipDir\$SnipDir.psm1",
+		"$SnipDir\Test-$SnipDir.ps1",
+		"$SnipDir\README.md",
+		"$SnipDir\Public\Do-Something.ps1",
+		"$SnipDir\Private\_InitializeSomething.ps1"
+	)
+
+	# Loop through each item and create directories or files as needed
+	foreach ($path in $items) {
+		if ($path.EndsWith("\")) {
+			# Create directory
+			New-Item -ItemType Directory -Path $path -Force | Out-Null
+			Write-Host "Created Directory: $path"
+		}
+		else {
+			# Get parent directory
+			$dir = Split-Path $path
+
+			# Create parent directory only if it is not null or empty
+			if (-not [string]::IsNullOrWhiteSpace($dir)) {
+				New-Item -ItemType Directory -Path $dir -Force | Out-Null
+				Write-Host "Created Parent Directory: $dir"
+			}
+
+			# Create file
+			New-Item -ItemType File -Path $path -Force | Out-Null
+			Write-Host "Created File: $path"
+		}
+	}
+}

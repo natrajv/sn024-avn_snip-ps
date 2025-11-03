@@ -2,4 +2,4 @@
 Import-Module "$PSScriptRoot\AvnSnip.psd1" -Force
 
 # Use module functions
-New-Snip -SnipDir "xtest"
+New-Snip -SnipDir "xtest" -SnipType "PowerShell-1"

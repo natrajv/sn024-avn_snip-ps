@@ -1,13 +1,13 @@
 @{
     # Required - Module version
-    ModuleVersion = '1.0.0'
+    ModuleVersion = '1.1.0'
 
     # Script module (the .psm1 file)
     RootModule = 'AvnSnip.psm1'
 
     # Author/Description
     Author = 'Natarajan'
-    Description = 'Initialize New Snip for Python'
+    Description = 'Initialize New Snip for Python, PowerShell'
 
     # Functions to export (optional, can also be in Export-ModuleMember)
     FunctionsToExport = @('New-Snip')
